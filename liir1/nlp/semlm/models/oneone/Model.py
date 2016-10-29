@@ -1,4 +1,4 @@
-from liir.ml.core.Option import Option
+from liir.ml.core.options.Option import Option
 from liir.ml.core.layers.Dense import Dense
 from liir.ml.core.layers.Dropout import Dropout
 from liir.ml.core.layers.Embedding import Embedding
@@ -57,25 +57,26 @@ class Model11(Sequential):
 
 
 
-def trainSemLM11(train_texts, valid_texts, we_dict_path=None, dep=1,hidden_size=32, batch_size=200, save_folder=".", model_name="simple", max_epochs=120):
+def trainSemLM11(train_texts, valid_texts, we_dict_path=None, dep=1,hidden_size=32, batch_size=200, save_folder=".", model_name="simple", max_epochs=120,
+                 load_dt=True):
 
     fm = FeatureManager()
     all_texts = train_texts + valid_texts
-    X,Y = generate_sequential_data(all_texts)
+    X,Y = generate_sequential_data(all_texts, loaddata=load_dt)
 
     for i in range(len(X)):
         fm.extract_features(X[i],Y[i])
 
 
 
-    X,Y= generate_sequential_data(train_texts)
+    X,Y= generate_sequential_data(train_texts, loaddata=load_dt)
 
     X = [[fm.f.map[fm.f.getFeatureValue(x)] +1 for x in XX] for XX in X ]
     Y = [[fm.fY.map[fm.fY.getFeatureValue(x)] + 1 for x in XX] for XX in Y]
 
 
 
-    Xv,Yv=generate_sequential_data(valid_texts)
+    Xv,Yv=generate_sequential_data(valid_texts, loaddata=load_dt)
 
 
 
@@ -105,25 +106,25 @@ def trainSemLM11(train_texts, valid_texts, we_dict_path=None, dep=1,hidden_size=
 
 
 def loadSemLM11(load_path, train_texts, valid_texts, we_dict_path=None, dep=1,hidden_size=32, batch_size=200, save_folder=".", model_name="simple",
-                          max_epochs=120, continue_train=False):
+                          max_epochs=120, continue_train=False, load_dt=True):
 
     fm = FeatureManager()
     all_texts = train_texts + valid_texts
-    X,Y = generate_sequential_data(all_texts)
+    X,Y = generate_sequential_data(all_texts, loaddata=load_dt)
 
     for i in range(len(X)):
         fm.extract_features(X[i],Y[i])
 
 
 
-    X,Y= generate_sequential_data(train_texts)
+    X,Y= generate_sequential_data(train_texts, loaddata=load_dt)
 
     X = [[fm.f.map[fm.f.getFeatureValue(x)] +1 for x in XX] for XX in X ]
     Y = [[fm.fY.map[fm.fY.getFeatureValue(x)] + 1 for x in XX] for XX in Y]
 
 
 
-    Xv,Yv=generate_sequential_data(valid_texts)
+    Xv,Yv=generate_sequential_data(valid_texts, loaddata=load_dt)
 
 
 

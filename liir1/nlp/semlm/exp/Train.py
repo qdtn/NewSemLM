@@ -13,20 +13,20 @@ def trainModel11(config_path):
     cfg = read_config(config_path)
 
     trainSemLM11(cfg['train'], cfg['valid'], cfg['we_dict'], cfg['dep'],
-                 cfg['hidden_size'], cfg['batch_size'], cfg['save_folder'])
+                 cfg['hidden_size'], cfg['batch_size'], cfg['save_folder'], load_dt=cfg['load_data'])
 
 def trainModel21(config_path):
     cfg = read_config(config_path)
 
     trainSemLM21(cfg['train'], cfg['valid'], cfg['we_dict1'], cfg['we_dict2'], cfg['dep'],
-                 cfg['hidden_size1'], cfg['hidden_size2'],cfg['batch_size'], cfg['save_folder'])
+                 cfg['hidden_size1'], cfg['hidden_size2'],cfg['batch_size'], cfg['save_folder'],load_dt=cfg['load_data'])
 
 
 def trainModel22(config_path):
     cfg = read_config(config_path)
 
     trainSemLM22(cfg['train'], cfg['valid'], cfg['we_dict1'], cfg['we_dict2'], cfg['dep'],
-                 cfg['hidden_size1'], cfg['hidden_size2'],cfg['batch_size'], cfg['save_folder'])
+                 cfg['hidden_size1'], cfg['hidden_size2'],cfg['batch_size'], cfg['save_folder'],load_dt=cfg['load_data'])
 
 if __name__=="__main__":
 
@@ -39,6 +39,8 @@ if __name__=="__main__":
     parser.add_argument('--22', dest='mdl22', action='store_true')
 
     args = parser.parse_args()
+
+
     if args.mdl11:
         trainModel11(args.exp_config)
     if args.mdl21:

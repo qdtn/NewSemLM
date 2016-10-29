@@ -5,7 +5,7 @@ __author__ = 'quynhdo'
 def read_config(config_path):
     config = {'train':[], 'valid':[],'data':'form','pos':'V','eos':True, 'model':'11',
               'batch_size':50, 'hidden_size':16, 'dep':1,
-              'we_dict':None, 'we_dict1':None,  'we_dict2':None}
+              'we_dict':None, 'we_dict1':None,  'we_dict2':None, "load_data":True}
 
     f = open(config_path, 'r')
     for l in f.readlines():

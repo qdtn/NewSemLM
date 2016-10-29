@@ -388,13 +388,13 @@ class Model22(Sequential):
             return output_func()
 
 
-def trainSemLM22(train_texts, valid_texts, we_dict_path1=None, we_dict_path2=None, dep=1,hidden_size1=32, hidden_size2=32, batch_size=200, save_folder=".", model_name="hybrid", max_epochs=120):
+def trainSemLM22(train_texts, valid_texts, we_dict_path1=None, we_dict_path2=None, dep=1,hidden_size1=32, hidden_size2=32, batch_size=200, save_folder=".", model_name="hybrid", max_epochs=120, load_dt=True):
 
     fm1 = FeatureManager()
     fm2 = FeatureManager()
 
     all_texts = train_texts + valid_texts
-    X1,X2,Y1,Y2 = generate_sequential_data(all_texts, type="2-2")
+    X1,X2,Y1,Y2 = generate_sequential_data(all_texts, type="2-2", loaddata=load_dt)
 
     for i in range(len(X1)):
         fm1.extract_features(X1[i],Y1[i])
@@ -403,7 +403,7 @@ def trainSemLM22(train_texts, valid_texts, we_dict_path1=None, we_dict_path2=Non
         fm2.extract_features(X2[i],Y2[i])
 
 
-    X1,X2, Y1, Y2= generate_sequential_data(train_texts,  type="2-2")
+    X1,X2, Y1, Y2= generate_sequential_data(train_texts,  type="2-2", loaddata=load_dt)
 
     X1 = [[fm1.f.map[fm1.f.getFeatureValue(x)] +1 for x in XX] for XX in X1 ]
     Y1= [[fm1.fY.map[fm1.fY.getFeatureValue(x)] + 1 for x in XX] for XX in Y1]
@@ -414,7 +414,7 @@ def trainSemLM22(train_texts, valid_texts, we_dict_path1=None, we_dict_path2=Non
 
 
 
-    X1v,X2v, Y1v, Y2v=generate_sequential_data(valid_texts, type="2-2")
+    X1v,X2v, Y1v, Y2v=generate_sequential_data(valid_texts, type="2-2", loaddata=load_dt)
 
 
 

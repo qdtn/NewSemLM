@@ -157,14 +157,20 @@ def getHeadNoun(w, data="form"):
 
 
 
-def generate_sequential_data(lst, pos="V", data="form", eos_at_begining=True, type="1-1"):
+def generate_sequential_data(lst, pos="V", data="form", eos_at_begining=True, type="1-1", loaddata=False):
 
-    txt= Text()
+    all_data = []
 
-    for l in lst:
-        txt.readConll2009Sentences(l)
+    if not loaddata:
 
-    all_data = extract_sequence(txt, pos, data)
+        for l in lst:
+            txt= Text()
+            txt.readConll2009Sentences(l)
+
+            dt = extract_sequence(txt, pos, data)
+            all_data = all_data + dt
+    else:
+        all_data = load_data(lst)
     if type == "1-1":
         return make_simple_seq(all_data, eos_at_begining)
     if type=="2-1":
@@ -196,3 +202,23 @@ def preprare_seq_seq_data(X, Y = None):
         return x, x_mask, y, y_mask
 
     return x, x_mask
+
+def load_data(lst):
+    all_data = []
+    for dir in lst:
+        f = open(dir, "r")
+        for line in f.readlines():
+            seq = []
+            tmps = line.split(" ")
+
+            for tmp in tmps:
+
+                pos = [i for i in range(len(tmp)) if tmp[i]==',']
+                if len(pos)>0:
+                    word = tmp[0:pos[-1]]
+                    label = tmp[pos[-1]+1:]
+                    seq.append((word,label))
+
+            all_data.append(seq)
+
+    return all_data
