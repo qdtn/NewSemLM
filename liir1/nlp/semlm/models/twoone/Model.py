@@ -323,7 +323,7 @@ class Model21(Sequential):
 
                                 valid_err = self.evaluation(x_v1,x_v2,y_v,mask_x_v,mask_y_v)
                                 valid_rs.append(valid_err)
-                                print (valid_rs)
+                                #print (valid_rs)
 
                             valid_err = np.mean(np.asarray(valid_rs))
 
@@ -421,7 +421,7 @@ def trainSemLM21(train_texts, valid_texts, we_dict_path1=None, we_dict_path2=Non
 
     mdl.option[Option.SAVE_TO] = save_folder + "/" + model_name + ".pkl"
     mdl.option[Option.SAVE_FREQ] = 20
-    mdl.option[Option.VALID_FREQ] = 20
+    mdl.option[Option.VALID_FREQ] = 100
     mdl.option[Option.BATCH_SIZE] = batch_size
     mdl.option[Option.SAVE_BEST_VALID_TO] = save_folder + "/" + "best_" + model_name + ".pkl"
     mdl.option[Option.MAX_EPOCHS]=max_epochs
@@ -483,7 +483,7 @@ def loadSemLM21(load_path,train_texts, valid_texts, we_dict_path1=None, we_dict_
 
     mdl.option[Option.SAVE_TO] = save_folder + "/" + model_name + ".pkl"
     mdl.option[Option.SAVE_FREQ] = 20
-    mdl.option[Option.VALID_FREQ] = 20
+    mdl.option[Option.VALID_FREQ] = 100
     mdl.option[Option.BATCH_SIZE] = batch_size
     mdl.option[Option.SAVE_BEST_VALID_TO] = save_folder + "/" + "best_" + model_name + ".pkl"
     mdl.option[Option.MAX_EPOCHS]=max_epochs
